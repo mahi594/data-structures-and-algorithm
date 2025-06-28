@@ -15,7 +15,8 @@ int getSum(int arr[],int size)
 
     }
     int remainingpart=getSum(arr+1,size-1);
-    int sum=arr[0]+remainingpart;
+    int sum =arr[0] +remainingpart;
+    cout<<sum<<endl;
     return sum;
 }
 

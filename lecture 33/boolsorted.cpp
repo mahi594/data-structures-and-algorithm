@@ -15,6 +15,7 @@ bool issorted(int arr[],int size)
     }
     else{
         bool remainingPart= issorted(arr+1,size-1);
+        return remainingPart;
     }
 }
 

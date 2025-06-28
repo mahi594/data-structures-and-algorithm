@@ -3,6 +3,8 @@ using namespace std;
 
 void reachedhome(int src,int dest)
 {
+
+    cout<<"sourse "<< src<<" destinaton "<< dest<<endl;
     //base case
     if(src==dest)
     {
@@ -12,7 +14,7 @@ void reachedhome(int src,int dest)
 
     //processing
     src++;
-    cout<<"sourse "<< src<<" destinaton "<< dest<<endl;
+    
 
     //recursice call
     reachedhome(src,dest);
