@@ -96,26 +96,25 @@ Node* removeDuplicates(Node* head)
     Node* current= head; 
     while(current!=NULL)
     {
-        if(current->next!=NULL &&current->data== current->next->data) //equal
+      Node* temp= current->next;
+      while(temp!=NULL)
+      {
+        if(current->data== temp->data)
         {
-            Node* next_next= current->next->next;
-            Node* toDElete= current->next;
-            delete(toDElete);   //we have delete first otherwisw the node to be deleted will get lost
-            current->next=next_next;
-            
+                // Found duplicate; delete temp->next
+                Node* toDelete = temp->next;
+                temp->next = temp->next->next;
+                toDelete->next = NULL;
+                delete toDelete;
         }
-        else // not equal
-        {
-            current=current->next;
+        else
+       {
+                temp = temp->next;
         }
+      }
     }
     return head;
 }
-
-
-
-
-  
 
 
 
@@ -160,7 +159,7 @@ int main()
     print(head);
     insertAtTail(tail,22);
     print(head);
-    head=removeDuplicates(head);
+    removeDuplicates(head);
     print(head);
     print(head);
    

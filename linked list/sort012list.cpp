@@ -86,36 +86,47 @@ void insertAtMiddle(Node* &head,Node* &tail,int position,int d)
 
 }
 
-Node* removeDuplicates(Node* head)
+
+
+void deleteNode(int position,Node* &head,Node* &tail)
 {
-    if(head==NULL)
+    //deleting the head
+    if(position==1)
     {
-        return NULL;
+        Node *temp=head;
+        head=head->next;
+        temp->next=NULL;
+        delete temp;  //free
     }
 
-    Node* current= head; 
-    while(current!=NULL)
-    {
-        if(current->next!=NULL &&current->data== current->next->data) //equal
+    //deletion at middle or end
+    else{
+        Node *current=head;
+        Node *previous=NULL;
+        int cnt=1;
+        while(cnt< position)
         {
-            Node* next_next= current->next->next;
-            Node* toDElete= current->next;
-            delete(toDElete);   //we have delete first otherwisw the node to be deleted will get lost
-            current->next=next_next;
-            
-        }
-        else // not equal
-        {
+            previous=current;
             current=current->next;
+            cnt++;
+        
         }
+
+        previous->next=current->next;
+
+        // If deleting the tail node
+        if (current->next == NULL) {
+            tail = previous;
+        }
+
+        current->next=NULL;
+        delete current;
+        
     }
-    return head;
+
+
 }
 
-
-
-
-  
 
 
 
@@ -146,25 +157,12 @@ int main()
     print(head);
     insertAtHead(head,12);
     print(head);
-    insertAtHead(head,12);
-    print(head);
     insertAtTail(tail,20);
     print(head);
-    insertAtTail(tail,20);
+    insertAtMiddle(head,tail,2,40);
+    print(head); 
+    deleteNode(3,head,tail);
     print(head);
-    insertAtTail(tail,20);
-    print(head);
-    insertAtTail(tail,21);
-    print(head);
-    insertAtTail(tail,22);
-    print(head);
-    insertAtTail(tail,22);
-    print(head);
-    head=removeDuplicates(head);
-    print(head);
-    print(head);
-   
-    
     
 
 
