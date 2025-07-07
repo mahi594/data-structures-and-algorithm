@@ -11,14 +11,11 @@ public:
         this->next = NULL;
     }
 
+    
     ~Node() {
-        int value = this->data;
-        if (this->next != NULL) {
-            delete next;
-            this->next = NULL;
-        }
-        cout << "memory is free " << value << endl;
-    }
+    cout << "memory is free " << data << endl;
+}
+
 };
 
 void insertAtHead(Node*& head, int d) {
@@ -57,34 +54,52 @@ void insertAtMiddle(Node*& head, Node*& tail, int position, int d) {
     temp->next = nodeToInsert;
 }
 
+void populate(Node*& tail, Node* current) {
+    current->next = NULL;  // disconnect current node
+    tail->next = current;
+    tail = current;
+}
+
 Node* sortedList(Node* head) {
-    int zeroCount = 0, oneCount = 0, twoCount = 0;
+    Node* zerohead = new Node(-1);
+    Node* zerotail = zerohead;
+    Node* onehead = new Node(-1);
+    Node* onetail = onehead;
+    Node* twohead = new Node(-1);
+    Node* twotail = twohead;
 
     Node* temp = head;
+
+    // Create separate lists
     while (temp != NULL) {
-        if (temp->data == 0)
-            zeroCount++;
-        else if (temp->data == 1)
-            oneCount++;
-        else if (temp->data == 2)
-            twoCount++;
-        temp = temp->next;
+        Node* nextNode = temp->next;  // store next before breaking the link
+        if (temp->data == 0) {
+            populate(zerotail, temp);
+        } else if (temp->data == 1) {
+            populate(onetail, temp);
+        } else if (temp->data == 2) {
+            populate(twotail, temp);
+        }
+        temp = nextNode;
     }
 
-    temp = head;  //again asign temp to head
-    while (temp != NULL) {
-        if (zeroCount > 0) {
-            temp->data = 0;
-            zeroCount--;  // till all the  zeros get on their place 
-        } else if (oneCount > 0) {
-            temp->data = 1;
-            oneCount--;
-        } else if (twoCount > 0) {
-            temp->data = 2;
-            twoCount--;
-        }
-        temp = temp->next;
+    // Merge lists
+    if (onehead->next != NULL) {
+        zerotail->next = onehead->next;
+    } else {
+        zerotail->next = twohead->next;
     }
+
+    onetail->next = twohead->next;
+    twotail->next = NULL;
+
+    // setup head
+    head = zerohead->next;
+
+    // delete dummy nodes
+    delete zerohead;
+    delete onehead;
+    delete twohead;
 
     return head;
 }
