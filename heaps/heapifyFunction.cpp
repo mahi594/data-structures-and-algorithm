@@ -88,9 +88,9 @@ class heap
         int left= 2*i;
         int right= 2*i + 1;
 
-        if(left<=n && arr[largest]< arr[left])
+        if(left<=n && arr[largest] < arr[left])
         {
-            largest=left;
+            largest=left; 
         }
 
         if(right<=n && arr[largest]< arr[right])
